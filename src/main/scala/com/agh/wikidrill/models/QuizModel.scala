@@ -1,6 +1,6 @@
 package com.agh.wikidrill.models
 
-import com.agh.wikidrill.{DatabaseProvider, DatabaseSupport}
+import com.agh.wikidrill.{DatabaseProvider, DatabaseSupport, NotFoundException}
 import com.mongodb.casbah.commons.{MongoDBObject, TypeImports}
 import org.bson.types.ObjectId
 import salat._
@@ -38,6 +38,8 @@ object QuizModel extends DatabaseSupport {
 
   def getById(objectId: ObjectId): QuizModel = {
     val retrieved = quizCollection.findOne(MongoDBObject("_id" -> objectId))
+    if (retrieved.isEmpty)
+      throw NotFoundException("Quiz by given id could not have been found")
     val model = grater[QuizModel].asObject(retrieved.get)
     model.updateQuestions()
     model
@@ -48,4 +50,11 @@ object QuizModel extends DatabaseSupport {
     quizModel.insertQuestions()
   }
 
+  def delete(id: ObjectId): Unit = {
+    //delete all questions
+    questionCollection.remove("quiz_id" $eq id)
+
+    if (quizCollection.findAndRemove(MongoDBObject("_id" -> id)).isEmpty)
+      throw NotFoundException("Quiz not found")
+  }
 }

@@ -12,6 +12,9 @@ object DatabaseProvider {
 
 }
 
+case class NotFoundException(private val message: String = "", private val cause: Throwable = None.orNull)
+  extends Exception(message, cause)
+
 trait DatabaseSupport {
   protected val database: MongoDB = DatabaseProvider.getDatabase
 }
