@@ -29,6 +29,7 @@ libraryDependencies ++= Seq(
   "org.mongodb" %% "casbah" % "3.1.1",
   "org.json4s"   %% "json4s-jackson" % "3.5.2",
   "org.json4s" %% "json4s-mongo" % "3.5.2",
+  "org.json4s" %% "json4s-ext" % "3.5.2",
   "com.github.salat" %% "salat" % "1.11.0",
   "com.github.salat" %% "salat-core" % "1.11.0"
   )
@@ -46,5 +47,10 @@ scalateTemplateConfig in Compile := {
     )
   )
 }
+
+javaOptions ++= Seq(
+  "-Xdebug",
+  "-Xrunjdwp:transport=dt_socket,server=y,suspend=n,address=5005"
+)
 
 enablePlugins(JettyPlugin)
