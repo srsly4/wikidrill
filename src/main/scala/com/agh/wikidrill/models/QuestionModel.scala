@@ -15,7 +15,7 @@ case class QuestionRevisionModel(text: String, var created: DateTime,
   require(answers.nonEmpty)
 }
 
-case class QuestionModel(@Key("_id") id: ObjectId, revisions: List[QuestionRevisionModel]){
+case class QuestionModel(@Key("_id") id: ObjectId, quiz_id: ObjectId, revisions: List[QuestionRevisionModel]){
   require(revisions.nonEmpty)
 }
 

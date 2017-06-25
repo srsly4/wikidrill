@@ -1,6 +1,7 @@
 package com.agh.wikidrill.api
 
 import com.agh.wikidrill.DefaultJsonSupport
+import com.agh.wikidrill.adapters.QuizInsertAdapter
 import com.agh.wikidrill.models.QuizModel
 import com.fasterxml.jackson.core.JsonParseException
 import org.json4s.MappingException
@@ -21,25 +22,24 @@ class QuizServlet extends ScalatraServlet with DefaultJsonSupport {
 
   //view one
   get("/:id") {
-    QuizModel.getById(new ObjectId(params("id"))).toString
+    val retrv = QuizModel.getById(new ObjectId(params("id")))
+    retrv
   }
 
   //create new
   post("/") {
     try {
-      val inserted = parsedBody.extract[QuizModel]
-      var result: Option[ActionResult] = None
-      for (question <- inserted.questions) {
-        if (question.revisions.length > 1)
-          result = Some(BadRequest("Inserted questions can not have more than 1 revisions"))
-        question.revisions.head.created = Some(DateTime.now())
-      }
+      val body = request.body
+      val pbody = parsedBody
+      val adapter = parsedBody.extract[QuizInsertAdapter]
+      val result: Option[ActionResult] = None
+      val inserted = adapter.createModel
 
       result match {
         case Some(response) => response
         case None => {
           QuizModel.saveNew(inserted)
-          Ok("Inserted")
+          Ok(inserted)
         }
       }
     }
