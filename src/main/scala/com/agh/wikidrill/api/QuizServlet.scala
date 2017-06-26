@@ -43,7 +43,7 @@ class QuizServlet extends ScalatraServlet with DefaultJsonSupport {
         case Some(response) => response
         case None => {
           QuizModel.saveNew(inserted)
-          Ok(inserted)
+          Ok(Map("quiz" -> inserted))
         }
       }
     }
@@ -59,6 +59,7 @@ class QuizServlet extends ScalatraServlet with DefaultJsonSupport {
     try {
       val quizId = new ObjectId(params("id"))
       QuizModel.delete(quizId)
+      Map()
     }
     catch {
       case NotFoundException(msg, _) => NotFound(msg)

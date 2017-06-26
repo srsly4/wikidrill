@@ -10,8 +10,11 @@
     <tr>
       <td>{{quiz.name}}</td>
       <td>
-        {{#link-to "quizzes.view" quiz.id }}Przejrzyj{{/link-to}}
-        {{#link-to "quizzes.append" quiz.id}}Dodaj pytania{{/link-to}}
+        <div class="small button-group">
+          {{#link-to "quizzes.view" quiz.id class="button" }}Przejrzyj{{/link-to}}
+          {{#link-to "quizzes.append" quiz.id class="success button"}}Dodaj pytania{{/link-to}}
+          <a class="alert button" {{action "delete_item" quiz}}>Usuń</a>
+        </div>
       </td>
     </tr>
   {{/each}}
