@@ -1,0 +1,6 @@
+<h2>Tworzenie nowego quizu</h2>
+<p>Wprowadź nazwę tworzonego quizu:</p>
+{{input value=quiz_name}}
+
+<button class="success button" {{action "add" quiz_name }}>Dodaj</button>
+{{outlet}}

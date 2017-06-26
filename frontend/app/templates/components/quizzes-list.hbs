@@ -1,0 +1,19 @@
+<table>
+  <thead>
+  <tr>
+    <th>Nazwa</th>
+    <th>Akcje</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each quizzes as |quiz|}}
+    <tr>
+      <td>{{quiz.name}}</td>
+      <td>
+        {{#link-to "quizzes.view" quiz.id }}Przejrzyj{{/link-to}}
+        {{#link-to "quizzes.append" quiz.id}}Dodaj pytania{{/link-to}}
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>

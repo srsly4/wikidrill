@@ -17,14 +17,14 @@ class QuizServlet extends ScalatraServlet with DefaultJsonSupport {
 
   // list of available quizzes
   get("/") {
-    for (el <- QuizModel.list()) yield el.toString
+   Map("quizzes" -> QuizModel.list())
   }
 
   //view one
   get("/:id") {
     try {
       val retrv = QuizModel.getById(new ObjectId(params("id")))
-      retrv
+      Map("quiz" -> retrv)
     }
     catch {
       case NotFoundException(msg, _) => NotFound(msg)
@@ -35,7 +35,7 @@ class QuizServlet extends ScalatraServlet with DefaultJsonSupport {
   //create new
   post("/") {
     try {
-      val adapter = parsedBody.extract[QuizInsertAdapter]
+      val adapter = parsedBody.children.head.extract[QuizInsertAdapter]
       val result: Option[ActionResult] = None
       val inserted = adapter.createModel
 
@@ -67,7 +67,7 @@ class QuizServlet extends ScalatraServlet with DefaultJsonSupport {
   }
 
   //append raw questions
-  post("/append-raw/:id") {
+  post("/:id/append-raw") {
     try {
       val quizId = new ObjectId(params("id"))
       val quiz = QuizModel.getById(quizId)

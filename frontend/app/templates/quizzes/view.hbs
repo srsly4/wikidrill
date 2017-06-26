@@ -1,0 +1,13 @@
+<h2>Podgląd quizu</h2>
+<h3>{{model.name}}</h3>
+{{#each model.questions as |question|}}
+  <div class="callout">
+    <h5>{{question.revisions.[0].text}}</h5>
+    {{#each question.revisions.[0].answers as |answer| }}
+      <div class="callout {{if answer.truth 'success'}}">
+        <p>{{answer.text}}</p>
+      </div>
+    {{/each}}
+  </div>
+{{/each}}
+{{outlet}}

@@ -1,0 +1,6 @@
+<h2>Parser pytań</h2>
+<h3>{{model.name}}</h3>
+<p>Wprowadź pytania w formacie zgodnym z Drill2:</p>
+{{textarea value=raw_text cols="80" rows="20"}}
+<button class="success button" {{action "send_raw" model raw_text}}>Parsuj i zapisz</button>
+{{outlet}}
