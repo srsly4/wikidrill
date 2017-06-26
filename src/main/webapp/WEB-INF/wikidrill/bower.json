@@ -1,0 +1,6 @@
+{
+  "name": "wikidrill",
+  "dependencies": {
+    "foundation-sites": "^6.3.1"
+  }
+}
