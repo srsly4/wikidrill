@@ -7,8 +7,9 @@
     <div class="small button-group">
       {{#link-to "question.view" question.id class="primary button" }}Przejrzyj rewizje{{/link-to}}
       {{#link-to "question-revision.edit" question.id class="success button" }}Modyfikuj{{/link-to}}
+      <a class="alert button" {{action "delete_question" question.id}}>Usuń</a>
     </div>
-    <h5>{{question.revisions.[0].text}}</h5>
+    <h5>{{expand-line-breaks question.revisions.[0].text}}</h5>
     {{#each question.revisions.[0].answers as |answer| }}
       <div class="callout {{if answer.truth 'success'}}">
         <p>{{answer.text}}</p>

@@ -1,0 +1,18 @@
+<h2>Rewizje pytania</h2>
+{{#link-to "question-revision.edit" model.id class="success button"}}Modyfikuj pytanie{{/link-to}}
+{{#each model.revisions as |revision|}}
+  <div class="callout question-revision">
+    <div class="label">Dodano: {{revision.created}}</div>
+    <div class="callout">
+      <p>
+        {{revision.text}}
+      </p>
+      {{#each revision.answers as |answer|}}
+        <div class="callout {{if answer.truth "success"}} {{unless answer.truth "alert"}}">
+          {{answer.text}}
+        </div>
+      {{/each}}
+    </div>
+  </div>
+{{/each}}
+{{outlet}}

@@ -4,20 +4,31 @@
   <div class="row session-container">
     <div class="large-9 medium-8 small-12 column">
       <div class="callout">
+        <div class="small button-group float-right">
+          {{#link-to "question.view" model.current_question.id class="secondary button" }}Rewizje{{/link-to}}
+          {{#link-to "question-revision.edit" model.current_question.id class="success button" }}Edytuj{{/link-to}}
+
+        </div>
+        <div class="primary label">{{model.current_question.created}}</div>
         <h4>Pytanie {{model.question_number}}/{{model.questions_length}}</h4>
-        <p>{{model.current_question.text}}</p>
+        <p>{{expand-line-breaks model.current_question.text}}</p>
         {{#each model.current_question.answers as |answer|}}
           <div class="callout {{if answer.wrong 'alert'}} {{if answer.correct 'success'}} answer-{{index}}">
-            {{input type="checkbox" name="isAdmin" checked=answer.checked}}
-            {{answer.text}}
+            <label>
+              {{input type="checkbox" name="isAdmin" checked=answer.checked}}
+              {{answer.text}}
+            </label>
           </div>
         {{/each}}
       </div>
-      {{#if model.checked_response}}
-        <button class="large button" {{action "next_question" model}}>Przejdź do następnego pytania</button>
-      {{else}}
-        <button class="large primary button" {{action "check_answers" model}}>Sprawdź</button>
-      {{/if}}
+      <div class="panel clearfix">
+        {{#if model.checked_response}}
+          <button class="large button float-right" {{action "next_question" model}}>Przejdź do następnego pytania</button>
+        {{else}}
+          <button class="large primary button float-right" {{action "check_answers" model}}>Sprawdź</button>
+        {{/if}}
+      </div>
+
 
     </div>
     <div class="large-3 medium-4 small-12 column">

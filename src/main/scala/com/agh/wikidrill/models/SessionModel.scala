@@ -58,8 +58,11 @@ object SessionModel extends DatabaseSupport {
   def getQuestionFromSessionId(sessionId: ObjectId): QuestionRevisionModel = {
     val session = getById(sessionId)
     try {
-      val question = QuestionModel.getById(session.questions(session.current_index))
-      question.revisions.head
+      val questionId = session.questions(session.current_index)
+      val question = QuestionModel.getById(questionId)
+      val revision = question.revisions.head
+      revision.id = questionId
+      revision
     }
     catch {
       case ex : Throwable =>

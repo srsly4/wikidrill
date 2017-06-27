@@ -25,5 +25,18 @@ class QuestionServlet extends ScalatraServlet with DefaultJsonSupport {
   }
 
 
+  delete("/:id"){
+    try {
+      val id = new ObjectId(params("id"))
+      val question = QuestionModel.getById(id)
+      question.delete()
+      Map("question" -> question)
+    }
+    catch {
+      case NotFoundException(msg, _) => NotFound(msg)
+      case _: Throwable => BadRequest("Unknown error!")
+    }
+  }
+
 
 }

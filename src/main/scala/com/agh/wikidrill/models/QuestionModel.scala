@@ -22,6 +22,10 @@ case class QuestionRevisionModel(@Ignore var id: ObjectId = new ObjectId, text: 
 case class QuestionModel(@Key("_id") id: ObjectId, quiz_id: ObjectId, var revisions: List[QuestionRevisionModel]){
   require(revisions.nonEmpty)
 
+  def delete(): Unit = {
+    QuestionModel.delete(this.id)
+  }
+
   def sortRevisions(): Unit = {
     revisions = revisions.sortWith((left, right) => { left.created.getMillis > right.created.getMillis })
   }
