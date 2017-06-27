@@ -42,6 +42,7 @@ object QuizModel extends DatabaseSupport {
       throw NotFoundException("Quiz by given id could not have been found")
     val model = grater[QuizModel].asObject(retrieved.get)
     model.updateQuestions()
+    for (question <- model.questions) question.sortRevisions()
     model
   }
 

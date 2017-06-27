@@ -13,14 +13,18 @@ case class AnswerModel(text: String, truth: Boolean){
   require(!text.isEmpty)
 }
 
-case class QuestionRevisionModel(text: String, var created: DateTime,
+case class QuestionRevisionModel(@Ignore var id: ObjectId = new ObjectId, text: String, var created: DateTime,
                                  var answers: List[AnswerModel]){
   require(!text.isEmpty)
   require(answers.nonEmpty)
 }
 
-case class QuestionModel(@Key("_id") id: ObjectId, quiz_id: ObjectId, revisions: List[QuestionRevisionModel]){
+case class QuestionModel(@Key("_id") id: ObjectId, quiz_id: ObjectId, var revisions: List[QuestionRevisionModel]){
   require(revisions.nonEmpty)
+
+  def sortRevisions(): Unit = {
+    revisions = revisions.sortWith((left, right) => { left.created.getMillis > right.created.getMillis })
+  }
 }
 
 

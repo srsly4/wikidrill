@@ -14,7 +14,9 @@ class QuestionServlet extends ScalatraServlet with DefaultJsonSupport {
   get("/:id"){
     try {
       val id = new ObjectId(params("id"))
-      QuestionModel.getById(id)
+      val question = QuestionModel.getById(id)
+      question.sortRevisions()
+      Map("question" -> question)
     }
     catch {
       case NotFoundException(msg, _) => NotFound(msg)
@@ -22,28 +24,6 @@ class QuestionServlet extends ScalatraServlet with DefaultJsonSupport {
     }
   }
 
-  get("/latest/:id"){
-    try {
-      QuestionModel.getLatestRevision(new ObjectId(params("id")))
-    }
-    catch {
-      case NotFoundException(msg, _) => NotFound(msg)
-      case _: Throwable => BadRequest("Unknown error!")
-    }
-  }
-
-  post("/add-revision/:id"){
-    try {
-      val questionId = new ObjectId(params("id"))
-      val adapter = parsedBody.extract[QuestionRevisionInsertAdapter]
-      QuestionModel.createRevision(questionId, adapter.createModel())
-      Ok()
-    }
-    catch {
-      case NotFoundException(msg, _) => NotFound(msg)
-      case _: Throwable => BadRequest("Unknown error!")
-    }
-  }
 
 
 }

@@ -26,7 +26,7 @@ case class QuestionInsertAdapter(text: String, answers: List[AnswerAdapter]){
 
   def createModel(quiz_id: ObjectId): QuestionModel = {
     val answers_model = answers.map { (el) => { el.createModel } }
-    val rev_model = QuestionRevisionModel(text, DateTime.now(), answers_model)
+    val rev_model = QuestionRevisionModel(quiz_id, text, DateTime.now(), answers_model)
     QuestionModel(new ObjectId(), quiz_id, rev_model :: Nil)
   }
 }

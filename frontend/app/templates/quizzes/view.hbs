@@ -1,7 +1,13 @@
 <h2>Podgląd quizu</h2>
 <h3>{{model.name}}</h3>
+{{#link-to "quizzes.append" model.id class="success button"}}Dodaj pytania{{/link-to}}
 {{#each model.questions as |question|}}
   <div class="callout">
+    <div class="secondary label float-right">Rewizje: {{question.revisions.length}}</div>
+    <div class="small button-group">
+      {{#link-to "question.view" question.id class="primary button" }}Przejrzyj rewizje{{/link-to}}
+      {{#link-to "question-revision.edit" question.id class="success button" }}Modyfikuj{{/link-to}}
+    </div>
     <h5>{{question.revisions.[0].text}}</h5>
     {{#each question.revisions.[0].answers as |answer| }}
       <div class="callout {{if answer.truth 'success'}}">

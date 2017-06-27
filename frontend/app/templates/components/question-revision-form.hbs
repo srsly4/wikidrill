@@ -1,0 +1,13 @@
+<div class="question-revision-form">
+  <label>Treść pytania</label>
+  {{textarea value=revision.text rows=5 cols=100}}
+  {{#each revision.answers as |answer|}}
+    <div class="callout">
+      <label>{{input type="checkbox" checked=answer.truth}} Odpowiedź poprawna</label>
+      {{input type="text" value=answer.text}}
+      <button class="alert button small" {{action "remove_answer" answer revision}}>Usuń</button>
+    </div>
+  {{/each}}
+  <button class="success button small" {{action "add_answer" revision}}>Dodaj odpowiedź</button>
+</div>
+{{yield}}

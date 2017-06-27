@@ -16,6 +16,14 @@ Router.map(function() {
   this.route('session', function() {
     this.route('view', { path: "/:session_id"});
   });
+
+  this.route('question', function() {
+    this.route('view', { path: "/:question_id"});
+  });
+
+  this.route('question-revision', function() {
+    this.route('edit', { path: "/:question_id"});
+  });
 });
 
 export default Router;
