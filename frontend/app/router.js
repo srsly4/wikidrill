@@ -12,6 +12,10 @@ Router.map(function() {
     this.route('append', { path: "/:quiz_id/append" });
     this.route('add');
   });
+
+  this.route('session', function() {
+    this.route('view', { path: "/:session_id"});
+  });
 });
 
 export default Router;

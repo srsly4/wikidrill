@@ -1,0 +1,13 @@
+<h2>Rozwiązywanie quizu</h2>
+
+<h4>Pytanie {{model.question_number}}/{{model.questions_length}}</h4>
+<p>{{model.current_question.text}}</p>
+{{#each model.current_question.answers as |answer|}}
+  <div class="callout">
+    <input type="checkbox" value="{{answer.text}}"  title="{{answer.text}}"/>
+  </div>
+{{/each}}
+
+<button class="primary button" {{action "post_answer" model}}>Dalej</button>
+
+{{outlet}}

@@ -4,9 +4,9 @@ export default Ember.Route.extend({
   actions: {
     send_raw(quiz, raw_text) {
       let context = this;
-      quiz.append_raw({"raw": raw_text}).then((session) => {
+      quiz.append_raw({"raw": raw_text}).then(() => {
         context.set("raw_text", "");
-        quiz.reload().then((session) => {
+        quiz.reload().then(() => {
           context.transitionTo("quizzes.view", quiz.id);
         });
       });
