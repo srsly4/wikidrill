@@ -1,13 +1,71 @@
 <h2>Rozwiązywanie quizu</h2>
 
-<h4>Pytanie {{model.question_number}}/{{model.questions_length}}</h4>
-<p>{{model.current_question.text}}</p>
-{{#each model.current_question.answers as |answer|}}
-  <div class="callout">
-    <input type="checkbox" value="{{answer.text}}"  title="{{answer.text}}"/>
-  </div>
-{{/each}}
+{{#unless model.completed}}
+  <div class="row session-container">
+    <div class="large-9 medium-8 small-12 column">
+      <div class="callout">
+        <h4>Pytanie {{model.question_number}}/{{model.questions_length}}</h4>
+        <p>{{model.current_question.text}}</p>
+        {{#each model.current_question.answers as |answer|}}
+          <div class="callout {{if answer.wrong 'alert'}} {{if answer.correct 'success'}} answer-{{index}}">
+            {{input type="checkbox" name="isAdmin" checked=answer.checked}}
+            {{answer.text}}
+          </div>
+        {{/each}}
+      </div>
+      {{#if model.checked_response}}
+        <button class="large button" {{action "next_question" model}}>Przejdź do następnego pytania</button>
+      {{else}}
+        <button class="large primary button" {{action "check_answers" model}}>Sprawdź</button>
+      {{/if}}
 
-<button class="primary button" {{action "post_answer" model}}>Dalej</button>
+    </div>
+    <div class="large-3 medium-4 small-12 column">
+      <h4>Statystyki</h4>
+      <p>Postęp: <strong>{{model.progress}}%</strong></p>
+      <p>Wynik: <strong>{{model.result}}%</strong></p>
+      <p>Rezultaty:</p>
+      <table>
+        <tbody>
+        <tr>
+          <td>Poprawne</td>
+          <td><strong>{{model.answers.correct}}</strong></td>
+        </tr>
+        <tr>
+          <td>Częściowo poprawne</td>
+          <td><strong>{{model.answers.partiall}}</strong></td>
+        </tr>
+        <tr>
+          <td>Błędne</td>
+          <td><strong>{{model.answers.bad}}</strong></td>
+        </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+{{else}}
+
+  <p><strong>Test ukończony.</strong> Rezultaty:</p>
+  <h3>Wynik: <strong>{{model.result}}</strong>%</h3>
+  <table>
+    <tbody>
+    <tr>
+      <td>Poprawne</td>
+      <td><strong>{{model.answers.correct}}</strong></td>
+    </tr>
+    <tr>
+      <td>Częściowo poprawne</td>
+      <td><strong>{{model.answers.partiall}}</strong></td>
+    </tr>
+    <tr>
+      <td>Błędne</td>
+      <td><strong>{{model.answers.bad}}</strong></td>
+    </tr>
+    </tbody>
+  </table>
+
+{{/unless}}
+
+
 
 {{outlet}}

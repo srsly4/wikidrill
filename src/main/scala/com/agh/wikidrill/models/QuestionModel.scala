@@ -14,7 +14,7 @@ case class AnswerModel(text: String, truth: Boolean){
 }
 
 case class QuestionRevisionModel(text: String, var created: DateTime,
-                                 answers: List[AnswerModel]){
+                                 var answers: List[AnswerModel]){
   require(!text.isEmpty)
   require(answers.nonEmpty)
 }

@@ -1,3 +1,25 @@
 {{#link-to "quizzes.add" class="success button"}}Dodaj nowy{{/link-to}}
-{{quizzes-list quizzes=model}}
+<table>
+  <thead>
+  <tr>
+    <th>Nazwa</th>
+    <th>Akcje</th>
+  </tr>
+  </thead>
+  <tbody>
+  {{#each model as |quiz|}}
+    <tr>
+      <td>{{quiz.name}}</td>
+      <td>
+        <div class="small button-group">
+          {{#link-to "quizzes.view" quiz.id class="button" }}Przejrzyj{{/link-to}}
+          {{#link-to "quizzes.append" quiz.id class="success button"}}Dodaj pytania{{/link-to}}
+          <a class="alert button" {{action "delete_item" quiz}}>Usuń</a>
+          <a class="secondary button" {{action "start_session" quiz}}>Rozwiąż!</a>
+        </div>
+      </td>
+    </tr>
+  {{/each}}
+  </tbody>
+</table>
 {{outlet}}

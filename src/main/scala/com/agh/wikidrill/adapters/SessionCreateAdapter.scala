@@ -5,6 +5,7 @@ import org.bson.types.ObjectId
 import org.joda.time.DateTime
 
 import scala.collection.mutable.ListBuffer
+import scala.util.Random.shuffle
 
 case class SessionCreateAdapter(quiz_id: ObjectId) {
 
@@ -18,6 +19,6 @@ case class SessionCreateAdapter(quiz_id: ObjectId) {
     //create new session with empty statistics
     SessionModel(new ObjectId(), quiz_id, DateTime.now(),
       Map("correct" -> 0, "partiall" -> 0, "bad" -> 0), 0,
-      question_indexes.to[List])
+      shuffle(question_indexes.to[List]))
   }
 }

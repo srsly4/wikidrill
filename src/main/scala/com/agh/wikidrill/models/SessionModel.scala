@@ -9,6 +9,7 @@ import salat.global._
 import salat.annotations._
 import org.joda.time.DateTime
 import com.mongodb.casbah.Imports._
+import scala.util.Random.{shuffle}
 
 case class SessionModel(@Key("_id") id: ObjectId, quiz_id: ObjectId,
                        creation_date: DateTime,
@@ -25,6 +26,16 @@ case class SessionModel(@Key("_id") id: ObjectId, quiz_id: ObjectId,
     current_question = if (current_index < questions.length)
       Some(SessionModel.getQuestionFromSessionId(this.id))
     else None
+  }
+
+  def completed: Boolean = {
+    current_index >= questions.length
+  }
+
+  def shuffleAnswers(): Unit = {
+    if (current_question.isEmpty)
+      this.loadCurrentQuestion()
+    this.current_question.get.answers = shuffle(this.current_question.get.answers)
   }
 
 }

@@ -17,6 +17,8 @@ class SessionServlet extends ScalatraServlet with DefaultJsonSupport {
     try {
       val session = SessionModel.getById(new ObjectId(params("id")))
       session.loadCurrentQuestion()
+      if (!session.completed)
+        session.shuffleAnswers()
       Map("session" -> session)
     }
     catch {
@@ -32,7 +34,7 @@ class SessionServlet extends ScalatraServlet with DefaultJsonSupport {
       val model = adapter.createModel()
       SessionModel.saveNew(model)
       model.loadCurrentQuestion()
-      model
+      Map("session" -> model)
     }
     catch {
       case NotFoundException(msg, _) => NotFound(msg)
