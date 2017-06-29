@@ -60,8 +60,10 @@ object SessionModel extends DatabaseSupport {
     try {
       val questionId = session.questions(session.current_index)
       val question = QuestionModel.getById(questionId)
+      question.sortRevisions()
       val revision = question.revisions.head
       revision.id = questionId
+
       revision
     }
     catch {

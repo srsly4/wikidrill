@@ -12,13 +12,13 @@ export default Ember.Route.extend({
       let answers = question.answers;
       let correct = 0;
       let wrong = 0;
-      let totalTruth = 0;
+      // let totalTruth = 0;
 
       let truthMatches = 0;
 
       let context = this;
       answers.forEach((answer, index) => {
-        if (answer.truth) totalTruth++;
+        // if (answer.truth) totalTruth++;
         let curr = false;
         if (typeof answer.checked !== 'undefined')
           curr = answer.checked;
@@ -51,7 +51,6 @@ export default Ember.Route.extend({
         response = 'partiall'
       }
 
-      console.log(response);
       this.checked_response = response;
       Ember.set(session, 'checked_response', response);
       Ember.set(question, 'answers', answers);
